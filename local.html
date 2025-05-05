@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Taxi Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header class="header">
+        <a href="index.html">
+            <img src="img/logo.png" alt="Taxi Service Logo" class="logo">
+        </a>
+        <nav class="main-nav">
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="local.html" class="nav-btn">Local</a>
+            <a href="packages.html" class="nav-btn">Packages</a>
+            <a href="services.html" class="nav-btn">Services</a>
+            <a href="about.html" class="nav-btn">About</a>
+        </nav>
+    </header>
+
+    <!-- Local Booking Form Section -->
+    <section class="local-booking-section">
+        <div class="container">
+            <h2>Book Cab</h2>
+            <div class="local-booking-form">
+                <form id="localBookingForm">
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location</label>
+                        <div class="location-input">
+                            <input type="text" id="pickupLocation" placeholder="Enter pickup location in Maharashtra" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dropLocation">Drop Location</label>
+                        <div class="location-input">
+                            <input type="text" id="dropLocation" placeholder="Enter drop location in Maharashtra" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="journeyDate">Journey Date</label>
+                            <input type="date" id="journeyDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="journeyTime">Journey Time</label>
+                            <input type="time" id="journeyTime" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passengerName">Passenger Name</label>
+                        <input type="text" id="passengerName" placeholder="Enter passenger name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passengerPhone">Passenger Phone</label>
+                        <input type="tel" id="passengerPhone" placeholder="Enter passenger phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requirements">Special Requirements (Optional)</label>
+                        <textarea id="requirements" placeholder="Any special requirements or notes"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="local.html">Local</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> +91 9172766007</p>
+                    <a href="https://maps.app.goo.gl/WGvZUz8xuo6DJW186?g_st=aw" class="review-link" target="_blank">
+                        <i class="fas fa-star"></i> Leave a Review
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Taxi Service. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Google Places Autocomplete
+        function initAutocomplete() {
+            // Define Maharashtra bounds
+            const maharashtraBounds = {
+                north: 22.0284,
+                south: 15.6024,
+                east: 80.8909,
+                west: 72.6596
+            };
+
+            // Initialize autocomplete for pickup location
+            const pickupInput = document.getElementById('pickupLocation');
+            const pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput, {
+                bounds: maharashtraBounds,
+                componentRestrictions: { country: 'in' },
+                types: ['geocode', 'establishment']
+            });
+
+            // Initialize autocomplete for drop location
+            const dropInput = document.getElementById('dropLocation');
+            const dropAutocomplete = new google.maps.places.Autocomplete(dropInput, {
+                bounds: maharashtraBounds,
+                componentRestrictions: { country: 'in' },
+                types: ['geocode', 'establishment']
+            });
+        }
+
+        // Handle form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('localBookingForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    pickupLocation: document.getElementById('pickupLocation').value,
+                    dropLocation: document.getElementById('dropLocation').value,
+                    journeyDate: document.getElementById('journeyDate').value,
+                    journeyTime: document.getElementById('journeyTime').value,
+                    passengerName: document.getElementById('passengerName').value,
+                    passengerPhone: document.getElementById('passengerPhone').value,
+                    requirements: document.getElementById('requirements').value
+                };
+
+                // Format message for WhatsApp
+                const message = `*Local Booking Request*\n\n` +
+                    `*Pickup Location:* ${formData.pickupLocation}\n` +
+                    `*Drop Location:* ${formData.dropLocation}\n` +
+                    `*Journey Date:* ${formData.journeyDate}\n` +
+                    `*Journey Time:* ${formData.journeyTime}\n` +
+                    `*Passenger Name:* ${formData.passengerName}\n` +
+                    `*Passenger Phone:* ${formData.passengerPhone}\n` +
+                    `*Special Requirements:* ${formData.requirements || 'None'}`;
+
+                // Encode message for WhatsApp URL
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/918329033541?text=${encodedMessage}`;
+
+                // Open WhatsApp
+                window.open(whatsappUrl, '_blank');
+                
+                // Reset form
+                form.reset();
+            });
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initAutocomplete" async defer></script>
+</body>
+</html> 

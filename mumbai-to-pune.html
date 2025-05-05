@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumbai to Pune Cab Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header class="header">
+        <a href="index.html">
+            <img src="img/logo.png" alt="Taxi Service Logo" class="logo">
+        </a>
+        <nav class="main-nav">
+            <!-- Add your navigation links here -->
+        </nav>
+    </header>
+
+    <!-- Small Hero Section -->
+    <section class="booking-hero">
+        <h1>Mumbai Airport to Pune Cab Service</h1>
+        <p>CSMT Airport</p>
+    </section>
+
+    <!-- Car Selection -->
+    <section class="car-selection">
+        <h2>Choose Your Vehicle</h2>
+        <div class="car-options">
+            <div class="car-option">
+                <img src="img/ertigasuv.jpg" alt="Ertiga SUV" class="car-image">
+                <h3>Ertiga SUV</h3>
+                <p>₹2,599/-</p>
+            </div>
+            <div class="car-option">
+                <img src="img/toyotarumion.jpg" alt="Toyota Rumion" class="car-image">
+                <h3>Toyota Rumion</h3>
+                <p>₹3,000/-</p>
+            </div>
+            <div class="car-option">
+                <img src="img/toyotainnovacrysta.webp" alt="Toyota Innova Crysta" class="car-image">
+                <h3>Toyota Innova Crysta</h3>
+                <p>₹3,799/-</p>
+            </div>
+            <div class="car-option">
+                <img src="img/acsedan.jpg" alt="AC Sedan" class="car-image">
+                <h3>AC Sedan</h3>
+                <p>₹1,999/-</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section class="booking-form-section">
+        <div class="terms">
+            <h3>Terms & Conditions:</h3>
+            <p>Toll, Parking, and Tax Fees Excluded | 150 Kms Door-to-Door Package</p>
+        </div>
+
+        <form class="booking-form">
+            <div class="form-group">
+                <label>Select Car *</label>
+                <div class="car-options">
+                    <div class="car-option">
+                        <input type="radio" name="car" id="sedan" value="sedan">
+                        <label for="sedan">AC Sedan - ₹ 1,999/-</label>
+                    </div>
+                    <div class="car-option">
+                        <input type="radio" name="car" id="ertiga" value="ertiga">
+                        <label for="ertiga">Ertiga SUV - ₹ 2,599/-</label>
+                    </div>
+                    <div class="car-option">
+                        <input type="radio" name="car" id="rumion" value="rumion">
+                        <label for="rumion">Toyota Rumion - ₹ 3,000/-</label>
+                    </div>
+                    <div class="car-option">
+                        <input type="radio" name="car" id="innova" value="innova">
+                        <label for="innova">Toyota Innova Crysta - ₹ 3,799/-</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Selected Route *</label>
+                <select required>
+                    <option value="mumbai-to-pune">Mumbai to Pune</option>
+                    <option value="pune-to-mumbai">Pune to Mumbai</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" placeholder="Enter Full Name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Journey Date *</label>
+                <input type="date" required>
+            </div>
+
+            <div class="form-group">
+                <label>Journey Time *</label>
+                <input type="time" required>
+            </div>
+
+            <div class="form-group">
+                <label>Pickup Point *</label>
+                <input type="text" placeholder="Enter Pickup Location" required>
+            </div>
+
+            <div class="form-group">
+                <label>Drop Point *</label>
+                <input type="text" placeholder="Enter Drop Location" required>
+            </div>
+
+            <div class="form-group">
+                <label>Mobile *</label>
+                <input type="tel" placeholder="Enter Valid 10 Digits Mobile Number" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Enter Email Address">
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Booking</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html> 
