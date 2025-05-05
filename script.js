@@ -93,49 +93,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const puneResults = document.getElementById('puneResults');
     const maharashtraResults = document.getElementById('maharashtraResults');
 
-    // Pune location search
-    puneSearch.addEventListener('input', (e) => {
-        showSearchResults(e.target.value, puneResults, puneLocations);
-    });
+    if (puneSearch && puneResults) {
+        puneSearch.addEventListener('input', (e) => {
+            showSearchResults(e.target.value, puneResults, puneLocations);
+        });
+    }
 
-    // Maharashtra location search
-    maharashtraSearch.addEventListener('input', (e) => {
-        showSearchResults(e.target.value, maharashtraResults, maharashtraLocations);
-    });
+    if (maharashtraSearch && maharashtraResults) {
+        maharashtraSearch.addEventListener('input', (e) => {
+            showSearchResults(e.target.value, maharashtraResults, maharashtraLocations);
+        });
+    }
 
     // Close search results when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.search-container')) {
-            puneResults.style.display = 'none';
-            maharashtraResults.style.display = 'none';
+            if (puneResults) puneResults.style.display = 'none';
+            if (maharashtraResults) maharashtraResults.style.display = 'none';
         }
     });
-
-    // Mobile Menu Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-
-    if (menuToggle && mainNav) {
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            mainNav.classList.toggle('active');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
-                menuToggle.classList.remove('active');
-                mainNav.classList.remove('active');
-            }
-        });
-
-        // Close menu when clicking a nav link
-        const navLinks = mainNav.querySelectorAll('.nav-btn');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                mainNav.classList.remove('active');
-            });
-        });
-    }
 }); 

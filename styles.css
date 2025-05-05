@@ -161,7 +161,7 @@ body {
 /* Mobile Navigation Styles */
 @media (max-width: 768px) {
     .header {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem;
         position: fixed;
         top: 0;
         left: 0;
@@ -172,60 +172,38 @@ body {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 60px;
+        height: auto;
+        min-height: 50px;
     }
 
     .logo {
-        height: 40px;
+        height: 30px;
         margin: 0;
     }
 
     .menu-toggle {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 25px;
-        height: 20px;
-        cursor: pointer;
-        padding: 0;
-        background: transparent;
-        border: none;
-    }
-
-    .menu-toggle span {
-        display: block;
-        height: 2px;
-        width: 100%;
-        background-color: #ffffff;
-        border-radius: 2px;
-        transition: all 0.3s ease;
+        display: none;
     }
 
     .main-nav {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 180px;
-        background: var(--darkest-blue);
-        padding: 0.5rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .main-nav.active {
-        display: block;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        align-items: center;
+        justify-content: flex-end;
+        margin-left: 0.5rem;
     }
 
     .nav-btn {
-        width: 100%;
-        text-align: left;
-        padding: 0.6rem;
-        margin: 0.1rem 0;
+        padding: 0.2rem 0.4rem;
+        margin: 0;
         border: none;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
         color: #ffffff;
         text-decoration: none;
         background: transparent;
+        white-space: nowrap;
     }
 
     .nav-btn:hover {
@@ -236,63 +214,12 @@ body {
         margin-top: 60px;
     }
 
-    /* Add menu toggle button */
-    .menu-toggle {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-        cursor: pointer;
-        padding: 0;
-        background: transparent;
-        border: none;
-    }
-
-    .menu-toggle span {
-        display: block;
-        height: 3px;
-        width: 100%;
-        background-color: #ffffff;
-        border-radius: 3px;
-        transition: all 0.3s ease;
-    }
-
-    .menu-toggle.active span:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .menu-toggle.active span:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
-    }
-
-    /* Mobile Hero Section */
-    .hero {
-        margin-top: 60px; /* Slightly reduced margin for mobile */
-        min-height: 50vh;
-    }
-
-    .hero-content {
-        padding: 1rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-content p {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .book-now-btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
+    .hero,
+    .services-hero,
+    .about-hero,
+    .booking-hero,
+    .local-booking-section {
+        margin-top: 60px;
     }
 }
 
