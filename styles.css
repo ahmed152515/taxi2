@@ -170,6 +170,24 @@ body {
 
     .menu-toggle {
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 1001;
+        padding: 0;
+        background: transparent;
+        border: none;
+    }
+
+    .menu-toggle span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 3px;
+        transition: all 0.3s ease;
     }
 
     .main-nav {
@@ -185,6 +203,7 @@ body {
         padding: 2rem;
         transition: right 0.3s ease;
         box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
     }
 
     .main-nav.active {
