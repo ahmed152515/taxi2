@@ -13,7 +13,7 @@ body {
     margin-top: 70px; /* Space for fixed header */
 }
 
-/* Header Styles */
+/* Header and Navigation Styles */
 .header {
     position: fixed;
     top: 0;
@@ -30,9 +30,9 @@ body {
 }
 
 .logo {
-    height: 150px;
+    height: 80px;
     width: auto;
-    filter: grayscale(100%) brightness(1.2); /* Make logo grayscale and slightly brighter */
+    filter: grayscale(100%) brightness(1.2);
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -63,6 +63,86 @@ body {
     background: #ffffff;
     color: var(--darkest-blue);
     transform: translateY(-2px);
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Navigation Styles */
+@media (max-width: 768px) {
+    .header {
+        padding: 0.5rem 1rem;
+    }
+
+    .logo {
+        height: 60px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: linear-gradient(to bottom, var(--darkest-blue), var(--medium-blue));
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-nav.active {
+        right: 0;
+    }
+
+    .nav-btn {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: none;
+    }
+
+    /* Hamburger Animation */
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
 }
 
 /* Color Theme Variables */
