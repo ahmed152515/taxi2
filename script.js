@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (menuToggle && mainNav) {
         // Toggle menu
         menuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
             menuToggle.classList.toggle('active');
             mainNav.classList.toggle('active');
