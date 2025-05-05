@@ -168,6 +168,9 @@ body {
         right: 0;
         z-index: 1000;
         background: linear-gradient(to right, var(--darkest-blue), var(--medium-blue));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .logo {
@@ -175,7 +178,7 @@ body {
     }
 
     .menu-toggle {
-        display: flex !important; /* Force display on mobile */
+        display: flex !important;
         flex-direction: column;
         justify-content: space-between;
         width: 30px;
@@ -185,7 +188,6 @@ body {
         padding: 0;
         background: transparent;
         border: none;
-        position: relative;
     }
 
     .menu-toggle span {
@@ -198,7 +200,7 @@ body {
     }
 
     .main-nav {
-        display: none; /* Hide by default on mobile */
+        display: none;
         position: fixed;
         top: 0;
         right: -100%;
@@ -215,7 +217,7 @@ body {
     }
 
     .main-nav.active {
-        display: flex; /* Show when active */
+        display: flex;
         right: 0;
     }
 
