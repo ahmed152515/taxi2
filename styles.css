@@ -162,6 +162,11 @@ body {
 @media (max-width: 768px) {
     .header {
         padding: 0.5rem 1rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
     }
 
     .logo {
@@ -169,7 +174,7 @@ body {
     }
 
     .menu-toggle {
-        display: flex;
+        display: flex !important; /* Force display on mobile */
         flex-direction: column;
         justify-content: space-between;
         width: 30px;
@@ -179,6 +184,7 @@ body {
         padding: 0;
         background: transparent;
         border: none;
+        position: relative;
     }
 
     .menu-toggle span {
@@ -203,7 +209,7 @@ body {
         padding: 2rem;
         transition: right 0.3s ease;
         box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
+        z-index: 999;
     }
 
     .main-nav.active {
@@ -217,6 +223,7 @@ body {
         margin: 0.5rem 0;
         border: 1px solid rgba(255, 255, 255, 0.2);
         font-size: 1.1rem;
+        display: block;
     }
 
     .nav-btn:hover {
@@ -235,6 +242,22 @@ body {
 
     .menu-toggle.active span:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Add overlay when menu is active */
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+    }
+
+    .menu-overlay.active {
+        display: block;
     }
 
     /* Mobile Hero Section */
