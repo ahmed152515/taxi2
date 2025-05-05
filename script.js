@@ -124,13 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (menuToggle && mainNav) {
         // Toggle menu
-        menuToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        menuToggle.addEventListener('click', function() {
             menuToggle.classList.toggle('active');
             mainNav.classList.toggle('active');
             menuOverlay.classList.toggle('active');
-            body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
         });
 
         // Close menu when clicking a nav link
@@ -139,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 menuToggle.classList.remove('active');
                 mainNav.classList.remove('active');
                 menuOverlay.classList.remove('active');
-                body.style.overflow = '';
             });
         });
 
@@ -148,22 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
             menuToggle.classList.remove('active');
             mainNav.classList.remove('active');
             menuOverlay.classList.remove('active');
-            body.style.overflow = '';
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!mainNav.contains(event.target) && !menuToggle.contains(event.target)) {
-                menuToggle.classList.remove('active');
-                mainNav.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                body.style.overflow = '';
-            }
-        });
-
-        // Prevent clicks inside menu from closing it
-        mainNav.addEventListener('click', function(e) {
-            e.stopPropagation();
         });
     }
 }); 
