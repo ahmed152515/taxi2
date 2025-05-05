@@ -197,6 +197,7 @@ body {
         padding: 1rem;
         margin: 0.5rem 0;
         border: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 1.1rem;
     }
 
     .nav-btn:hover {
@@ -1738,8 +1739,10 @@ h2 {
 
 /* Local Booking Section */
 .local-booking-section {
-    padding: 4rem 5%;
+    padding: 6rem 5% 4rem;  /* Increased top padding to account for fixed header */
     background-color: var(--secondary-color);
+    min-height: 100vh;
+    margin-top: 60px;  /* Added margin-top to account for fixed header */
 }
 
 .local-booking-section h2 {
@@ -1852,6 +1855,19 @@ h2 {
 
     .map-container {
         height: 300px;
+    }
+
+    .local-booking-section {
+        padding: 5rem 1rem 2rem;  /* Adjusted padding for mobile */
+        margin-top: 50px;  /* Adjusted margin for mobile */
+    }
+
+    .local-booking-section h2 {
+        font-size: 2rem;
+    }
+
+    .local-booking-form {
+        padding: 1.5rem;
     }
 }
 
