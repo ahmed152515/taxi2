@@ -6,7 +6,167 @@
     <title>Local Taxi Services</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMqXB9wPf8L7VmC0FpR68kx-IlOk3Sobk&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMqXB9wPf8L7VmC0FpR68kx-IlOk3Sobk&libraries=places" async defer></script>
+    <style>
+        .pac-container {
+            z-index: 10000 !important;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            font-family: Arial, sans-serif;
+            margin-top: 5px;
+        }
+        .pac-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        .pac-item:hover {
+            background-color: #f5f5f5;
+        }
+        .location-input {
+            position: relative;
+        }
+        .location-input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .location-input input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        /* Mobile Navigation Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* Hero Section Mobile Styles */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            width: 90%;
+            z-index: 2;
+        }
+
+        /* Mobile Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: white;
+                padding: 80px 20px 20px;
+                transition: right 0.3s ease;
+                z-index: 999;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .main-nav.active {
+                right: 0;
+            }
+
+            .main-nav .nav-btn {
+                display: block;
+                padding: 15px 0;
+                border-bottom: 1px solid #eee;
+                text-align: left;
+            }
+
+            body.menu-open {
+                overflow: hidden;
+            }
+
+            .hero {
+                height: 250px;
+                margin-top: 60px; /* Adjust based on your header height */
+            }
+
+            .hero-content h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header with Logo and Navigation -->
@@ -122,53 +282,160 @@
 
     <script>
         function initAutocomplete() {
-            // Initialize autocomplete for pickup location
-            new google.maps.places.Autocomplete(
-                document.getElementById('pickupLocation'),
-                { types: ['geocode'] }
-            );
+            try {
+                // Initialize autocomplete for pickup location
+                const pickupInput = document.getElementById('pickupLocation');
+                const pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput, {
+                    types: ['address', 'establishment'],
+                    componentRestrictions: { country: 'IN' },
+                    fields: ['address_components', 'geometry', 'formatted_address', 'name']
+                });
 
-            // Initialize autocomplete for drop location
-            new google.maps.places.Autocomplete(
-                document.getElementById('dropLocation'),
-                { types: ['geocode'] }
-            );
+                // Initialize autocomplete for drop location
+                const dropInput = document.getElementById('dropLocation');
+                const dropAutocomplete = new google.maps.places.Autocomplete(dropInput, {
+                    types: ['address', 'establishment'],
+                    componentRestrictions: { country: 'IN' },
+                    fields: ['address_components', 'geometry', 'formatted_address', 'name']
+                });
 
-            // Handle form submission
-            document.getElementById('localBookingForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const formData = {
-                    pickupLocation: document.getElementById('pickupLocation').value,
-                    dropLocation: document.getElementById('dropLocation').value,
-                    journeyDate: document.getElementById('journeyDate').value,
-                    journeyTime: document.getElementById('journeyTime').value,
-                    passengerName: document.getElementById('passengerName').value,
-                    passengerPhone: document.getElementById('passengerPhone').value,
-                    requirements: document.getElementById('requirements').value
-                };
+                // Add place_changed listeners
+                pickupAutocomplete.addListener('place_changed', function() {
+                    const place = pickupAutocomplete.getPlace();
+                    if (!place.geometry) {
+                        pickupInput.value = '';
+                        return;
+                    }
+                    pickupInput.value = place.formatted_address;
+                });
 
-                // Format message for WhatsApp
-                const message = `*Local Booking Request*\n\n` +
-                    `*Pickup Location:* ${formData.pickupLocation}\n` +
-                    `*Drop Location:* ${formData.dropLocation}\n` +
-                    `*Journey Date:* ${formData.journeyDate}\n` +
-                    `*Journey Time:* ${formData.journeyTime}\n` +
-                    `*Passenger Name:* ${formData.passengerName}\n` +
-                    `*Passenger Phone:* ${formData.passengerPhone}\n` +
-                    `*Special Requirements:* ${formData.requirements || 'None'}`;
+                dropAutocomplete.addListener('place_changed', function() {
+                    const place = dropAutocomplete.getPlace();
+                    if (!place.geometry) {
+                        dropInput.value = '';
+                        return;
+                    }
+                    dropInput.value = place.formatted_address;
+                });
 
-                // Encode message for WhatsApp URL
-                const encodedMessage = encodeURIComponent(message);
-                const whatsappUrl = `https://wa.me/918329033541?text=${encodedMessage}`;
+                // Prevent form submission on enter key
+                pickupInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                    }
+                });
 
-                // Open WhatsApp
-                window.open(whatsappUrl, '_blank');
-                
-                // Reset form
-                this.reset();
-            });
+                dropInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                    }
+                });
+
+                // Handle form submission
+                document.getElementById('localBookingForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = {
+                        pickupLocation: pickupInput.value,
+                        dropLocation: dropInput.value,
+                        journeyDate: document.getElementById('journeyDate').value,
+                        journeyTime: document.getElementById('journeyTime').value,
+                        passengerName: document.getElementById('passengerName').value,
+                        passengerPhone: document.getElementById('passengerPhone').value,
+                        requirements: document.getElementById('requirements').value
+                    };
+
+                    // Format message for WhatsApp
+                    const message = `*Local Booking Request*\n\n` +
+                        `*Pickup Location:* ${formData.pickupLocation}\n` +
+                        `*Drop Location:* ${formData.dropLocation}\n` +
+                        `*Journey Date:* ${formData.journeyDate}\n` +
+                        `*Journey Time:* ${formData.journeyTime}\n` +
+                        `*Passenger Name:* ${formData.passengerName}\n` +
+                        `*Passenger Phone:* ${formData.passengerPhone}\n` +
+                        `*Special Requirements:* ${formData.requirements || 'None'}`;
+
+                    // Encode message for WhatsApp URL
+                    const encodedMessage = encodeURIComponent(message);
+                    const whatsappUrl = `https://wa.me/918329033541?text=${encodedMessage}`;
+
+                    // Open WhatsApp
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Reset form
+                    this.reset();
+                });
+            } catch (error) {
+                console.error('Error initializing Google Maps:', error);
+            }
         }
+
+        // Initialize when the page loads
+        window.addEventListener('load', function() {
+            if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+                initAutocomplete();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            const body = document.body;
+
+            // Create menu overlay
+            const menuOverlay = document.createElement('div');
+            menuOverlay.className = 'menu-overlay';
+            body.appendChild(menuOverlay);
+
+            // Toggle menu function
+            function toggleMenu() {
+                menuToggle.classList.toggle('active');
+                mainNav.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            }
+
+            // Event listeners for menu toggle
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
+                });
+            }
+
+            // Event listener for overlay
+            menuOverlay.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Close menu when clicking a nav link
+            const navLinks = document.querySelectorAll('.nav-btn');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (mainNav.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (mainNav.classList.contains('active') && 
+                    !mainNav.contains(e.target) && 
+                    !menuToggle.contains(e.target)) {
+                    toggleMenu();
+                }
+            });
+
+            // Prevent menu from closing when clicking inside
+            mainNav.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
     </script>
 </body>
 </html> 
