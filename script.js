@@ -1,4 +1,62 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const body = document.body;
+
+    // Create menu overlay
+    const menuOverlay = document.createElement('div');
+    menuOverlay.className = 'menu-overlay';
+    body.appendChild(menuOverlay);
+
+    // Toggle menu function
+    function toggleMenu() {
+        menuToggle.classList.toggle('active');
+        mainNav.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    }
+
+    // Event listeners for menu toggle
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenu();
+        });
+    }
+
+    // Event listener for overlay
+    menuOverlay.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close menu when clicking a nav link
+    const navLinks = document.querySelectorAll('.nav-btn');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (mainNav.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (mainNav.classList.contains('active') && 
+            !mainNav.contains(e.target) && 
+            !menuToggle.contains(e.target)) {
+            toggleMenu();
+        }
+    });
+
+    // Prevent menu from closing when clicking inside
+    mainNav.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
     // Form submission handling
     const enquiryForm = document.querySelector('.enquiry-form');
     if (enquiryForm) {
@@ -109,37 +167,5 @@ document.addEventListener('DOMContentLoaded', function() {
             puneResults.style.display = 'none';
             maharashtraResults.style.display = 'none';
         }
-    });
-
-    // Mobile Menu Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-    const body = document.body;
-
-    // Create menu overlay
-    const menuOverlay = document.createElement('div');
-    menuOverlay.className = 'menu-overlay';
-    body.appendChild(menuOverlay);
-
-    // Toggle menu function
-    function toggleMenu() {
-        menuToggle.classList.toggle('active');
-        mainNav.classList.toggle('active');
-        menuOverlay.classList.toggle('active');
-        body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
-    }
-
-    // Event listeners
-    menuToggle.addEventListener('click', toggleMenu);
-    menuOverlay.addEventListener('click', toggleMenu);
-
-    // Close menu when clicking a nav link
-    const navLinks = document.querySelectorAll('.nav-btn');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (mainNav.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
     });
 }); 
