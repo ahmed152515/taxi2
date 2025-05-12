@@ -1841,15 +1841,20 @@ h2 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.location-suggestions div {
+.search-result-item {
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.2s ease;
     color: #333;
     font-size: 14px;
+    border-bottom: 1px solid #eee;
 }
 
-.location-suggestions div:hover {
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
     background-color: #f5f5f5;
 }
 

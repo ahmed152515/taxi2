@@ -6,6 +6,7 @@
     <title>Local Taxi Services</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMqXB9wPf8L7VmC0FpR68kx-IlOk3Sobk&libraries=places" async defer></script>
 </head>
 <body>
     <!-- Header with Logo and Navigation -->
@@ -120,42 +121,28 @@
     </footer>
 
     <script>
-        // Initialize Google Places Autocomplete
         function initAutocomplete() {
-            // Define Maharashtra bounds
-            const maharashtraBounds = {
-                north: 22.0284,
-                south: 15.6024,
-                east: 80.8909,
-                west: 72.6596
-            };
-
-            // Initialize autocomplete for pickup location
             const pickupInput = document.getElementById('pickupLocation');
-            const pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput, {
-                bounds: maharashtraBounds,
-                componentRestrictions: { country: 'in' },
-                types: ['geocode', 'establishment']
-            });
-
-            // Initialize autocomplete for drop location
             const dropInput = document.getElementById('dropLocation');
-            const dropAutocomplete = new google.maps.places.Autocomplete(dropInput, {
-                bounds: maharashtraBounds,
-                componentRestrictions: { country: 'in' },
-                types: ['geocode', 'establishment']
-            });
-        }
 
-        // Handle form submission
-        document.addEventListener('DOMContentLoaded', function() {
+            // Simple autocomplete for pickup location
+            new google.maps.places.Autocomplete(pickupInput, {
+                componentRestrictions: { country: 'in' }
+            });
+
+            // Simple autocomplete for drop location
+            new google.maps.places.Autocomplete(dropInput, {
+                componentRestrictions: { country: 'in' }
+            });
+
+            // Handle form submission
             const form = document.getElementById('localBookingForm');
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 const formData = {
-                    pickupLocation: document.getElementById('pickupLocation').value,
-                    dropLocation: document.getElementById('dropLocation').value,
+                    pickupLocation: pickupInput.value,
+                    dropLocation: dropInput.value,
                     journeyDate: document.getElementById('journeyDate').value,
                     journeyTime: document.getElementById('journeyTime').value,
                     passengerName: document.getElementById('passengerName').value,
@@ -183,8 +170,10 @@
                 // Reset form
                 form.reset();
             });
-        });
+        }
+
+        // Initialize autocomplete when the page loads
+        window.onload = initAutocomplete;
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html> 
