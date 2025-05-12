@@ -10,7 +10,7 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: var(--secondary-color);
-    margin-top: 70px; /* Space for fixed header */
+    padding-top: 80px; /* Increased padding to account for fixed header */
 }
 
 /* Header and Navigation Styles */
@@ -19,6 +19,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
+    height: 80px; /* Fixed height for header */
     padding: 0.5rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -90,12 +91,14 @@ body {
 /* Hero Section Styles */
 .hero {
     position: relative;
-    min-height: 80vh;
+    width: 100%;
+    height: calc(100vh - 80px); /* Subtract header height */
+    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: 70px; /* Added margin-top to account for fixed header */
+    margin-top: 0; /* Remove margin-top as we're using padding-top on body */
 }
 
 .hero-content {
@@ -160,66 +163,132 @@ body {
 
 /* Mobile Navigation Styles */
 @media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Slightly reduced padding for mobile */
+    }
+
     .header {
-        padding: 0.5rem;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        background: linear-gradient(to right, var(--darkest-blue), var(--medium-blue));
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: auto;
-        min-height: 50px;
+        height: 70px; /* Slightly reduced height for mobile */
+        padding: 0.5rem 1rem;
+    }
+
+    .hero {
+        height: calc(100vh - 70px); /* Adjust for mobile header height */
+        min-height: 400px;
     }
 
     .logo {
-        height: 30px;
-        margin: 0;
+        height: 50px;
     }
 
     .menu-toggle {
-        display: none;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 1001;
+        padding: 0;
+        background: transparent;
+        border: none;
+    }
+
+    .menu-toggle span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 3px;
+        transition: all 0.3s ease;
     }
 
     .main-nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: linear-gradient(to bottom, var(--darkest-blue), var(--medium-blue));
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 999;
+    }
+
+    .main-nav.active {
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.2rem;
-        align-items: center;
-        justify-content: flex-end;
-        margin-left: 0.5rem;
+        right: 0;
     }
 
     .nav-btn {
-        padding: 0.2rem 0.4rem;
-        margin: 0;
-        border: none;
-        font-size: 0.7rem;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 1.1rem;
+        display: block;
         color: #ffffff;
         text-decoration: none;
-        background: transparent;
-        white-space: nowrap;
     }
 
     .nav-btn:hover {
         background: rgba(255, 255, 255, 0.1);
+        transform: none;
     }
 
-    body {
-        margin-top: 60px;
+    /* Hamburger Animation */
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
     }
 
-    .hero,
-    .services-hero,
-    .about-hero,
-    .booking-hero,
-    .local-booking-section {
-        margin-top: 60px;
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Add overlay when menu is active */
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+    }
+
+    .menu-overlay.active {
+        display: block;
+    }
+
+    /* Mobile Hero Section */
+    .hero-content {
+        padding: 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .book-now-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -255,12 +324,11 @@ body {
 /* Hero Section Styles */
 .hero {
     position: relative;
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: 70px; /* Added margin-top to account for fixed header */
 }
 
 .hero-image-container {
@@ -823,9 +891,6 @@ h2 {
     text-align: center;
     color: var(--text-color);
     padding: 0 2rem;
-    margin-top: 100px; /* Increased margin to ensure visibility */
-    position: relative;
-    z-index: 1;
 }
 
 .booking-hero h1 {
@@ -1507,7 +1572,6 @@ h2 {
     text-align: center;
     color: var(--text-color);
     padding: 0 2rem;
-    margin-top: 120px; /* Increased margin for services page */
 }
 
 .services-hero h1 {
@@ -1614,7 +1678,6 @@ h2 {
     text-align: center;
     color: var(--text-color);
     padding: 0 2rem;
-    margin-top: 120px; /* Increased margin for about page */
 }
 
 .about-hero h1 {
@@ -1724,10 +1787,10 @@ h2 {
 
 /* Local Booking Section */
 .local-booking-section {
-    padding: 6rem 5% 4rem;
+    padding: 6rem 5% 4rem;  /* Increased top padding to account for fixed header */
     background-color: var(--secondary-color);
     min-height: 100vh;
-    margin-top: 120px; /* Increased margin for local page */
+    margin-top: 60px;  /* Added margin-top to account for fixed header */
 }
 
 .local-booking-section h2 {
@@ -1844,7 +1907,7 @@ h2 {
 
     .local-booking-section {
         padding: 5rem 1rem 2rem;  /* Adjusted padding for mobile */
-        margin-top: 100px;  /* Adjusted margin for mobile */
+        margin-top: 50px;  /* Adjusted margin for mobile */
     }
 
     .local-booking-section h2 {
