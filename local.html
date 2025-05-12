@@ -6,7 +6,7 @@
     <title>Local Taxi Services</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMqXB9wPf8L7VmC0FpR68kx-IlOk3Sobk&libraries=places" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMqXB9wPf8L7VmC0FpR68kx-IlOk3Sobk&libraries=places&callback=initAutocomplete" async defer></script>
 </head>
 <body>
     <!-- Header with Logo and Navigation -->
@@ -122,27 +122,25 @@
 
     <script>
         function initAutocomplete() {
-            const pickupInput = document.getElementById('pickupLocation');
-            const dropInput = document.getElementById('dropLocation');
+            // Initialize autocomplete for pickup location
+            new google.maps.places.Autocomplete(
+                document.getElementById('pickupLocation'),
+                { types: ['geocode'] }
+            );
 
-            // Simple autocomplete for pickup location
-            new google.maps.places.Autocomplete(pickupInput, {
-                componentRestrictions: { country: 'in' }
-            });
-
-            // Simple autocomplete for drop location
-            new google.maps.places.Autocomplete(dropInput, {
-                componentRestrictions: { country: 'in' }
-            });
+            // Initialize autocomplete for drop location
+            new google.maps.places.Autocomplete(
+                document.getElementById('dropLocation'),
+                { types: ['geocode'] }
+            );
 
             // Handle form submission
-            const form = document.getElementById('localBookingForm');
-            form.addEventListener('submit', function(e) {
+            document.getElementById('localBookingForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 const formData = {
-                    pickupLocation: pickupInput.value,
-                    dropLocation: dropInput.value,
+                    pickupLocation: document.getElementById('pickupLocation').value,
+                    dropLocation: document.getElementById('dropLocation').value,
                     journeyDate: document.getElementById('journeyDate').value,
                     journeyTime: document.getElementById('journeyTime').value,
                     passengerName: document.getElementById('passengerName').value,
@@ -168,12 +166,9 @@
                 window.open(whatsappUrl, '_blank');
                 
                 // Reset form
-                form.reset();
+                this.reset();
             });
         }
-
-        // Initialize autocomplete when the page loads
-        window.onload = initAutocomplete;
     </script>
 </body>
 </html> 
