@@ -92,13 +92,33 @@ body {
 .hero {
     position: relative;
     width: 100%;
-    height: calc(100vh - 80px); /* Subtract header height */
+    height: calc(100vh - 80px);
     min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: 0; /* Remove margin-top as we're using padding-top on body */
+    margin-top: 0;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    z-index: 2;
 }
 
 .hero-content {
@@ -123,26 +143,6 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.hero-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
-    z-index: 2;
-}
-
 .book-now-btn {
     display: inline-block;
     padding: 1rem 2rem;
@@ -164,17 +164,12 @@ body {
 /* Mobile Navigation Styles */
 @media (max-width: 768px) {
     body {
-        padding-top: 70px; /* Slightly reduced padding for mobile */
+        padding-top: 70px;
     }
 
     .header {
-        height: 70px; /* Slightly reduced height for mobile */
+        height: 70px;
         padding: 0.5rem 1rem;
-    }
-
-    .hero {
-        height: calc(100vh - 70px); /* Adjust for mobile header height */
-        min-height: 400px;
     }
 
     .logo {
@@ -255,7 +250,7 @@ body {
         transform: translateY(-9px) rotate(-45deg);
     }
 
-    /* Add overlay when menu is active */
+    /* Menu Overlay */
     .menu-overlay {
         display: none;
         position: fixed;

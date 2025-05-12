@@ -93,23 +93,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const puneResults = document.getElementById('puneResults');
     const maharashtraResults = document.getElementById('maharashtraResults');
 
-    if (puneSearch && puneResults) {
-        puneSearch.addEventListener('input', (e) => {
-            showSearchResults(e.target.value, puneResults, puneLocations);
-        });
-    }
+    // Pune location search
+    puneSearch.addEventListener('input', (e) => {
+        showSearchResults(e.target.value, puneResults, puneLocations);
+    });
 
-    if (maharashtraSearch && maharashtraResults) {
-        maharashtraSearch.addEventListener('input', (e) => {
-            showSearchResults(e.target.value, maharashtraResults, maharashtraLocations);
-        });
-    }
+    // Maharashtra location search
+    maharashtraSearch.addEventListener('input', (e) => {
+        showSearchResults(e.target.value, maharashtraResults, maharashtraLocations);
+    });
 
     // Close search results when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.search-container')) {
-            if (puneResults) puneResults.style.display = 'none';
-            if (maharashtraResults) maharashtraResults.style.display = 'none';
+            puneResults.style.display = 'none';
+            maharashtraResults.style.display = 'none';
         }
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const body = document.body;
+
+    // Create menu overlay
+    const menuOverlay = document.createElement('div');
+    menuOverlay.className = 'menu-overlay';
+    body.appendChild(menuOverlay);
+
+    // Toggle menu function
+    function toggleMenu() {
+        menuToggle.classList.toggle('active');
+        mainNav.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : '';
+    }
+
+    // Event listeners
+    menuToggle.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking a nav link
+    const navLinks = document.querySelectorAll('.nav-btn');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (mainNav.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
     });
 }); 
